@@ -27,17 +27,19 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    padding-top: 60px;
-    min-height: 100vh;
-}
+    padding-top: 5vh;
+    min-height: 95vh;
 
-body {
     background: linear-gradient(270deg, #dfdfdf, #b7eefb, #fbb8bb);
     background-size: 600% 600%;
 
     -webkit-animation: AnimationName 9s ease infinite;
     -moz-animation: AnimationName 9s ease infinite;
-    animation: AnimationName 9s ease infinite;
+    animation: AnimationName 9s ease infinite;    
+}
+
+body {
+
 }
 
 @-webkit-keyframes AnimationName {

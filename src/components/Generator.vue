@@ -39,7 +39,6 @@
 				</div>
 			</div>
 			<div class="column is-6 list-wrapper">
-				
 
 				<div v-show="isLoading" class="loader-wrapper">
 					<div class="fancy-spinner">
@@ -48,29 +47,18 @@
 						<div class="dot"></div>
 					</div>
 				</div>
-				<!-- <transition-group name="fade" mode="out-in">	 -->
+                <transition-group name="fade" mode="out-in">	
 					<app-list
 						v-for="(person, i) in names.results"
 						:key="person.name.first"
 						:index="i"
-						:firstname="person.name.first"
-						:lastname="person.name.last"
-						:gender="person.gender"
-						:street="person.location.street.name"
-						:streetnumber="person.location.street.number"
-						:state="person.location.state "
-						:city="person.location.city"
-						:country="person.location.country"
-						:thumbnail="person.picture.thumbnail"
+                        :person="person"
 						:isLoading="isLoading"
 						@copyclipboard="copyClipboard(`${i}-person-${person.name.first}`)"
 						
 					>
-						
 					</app-list>
-
-				<!-- </transition-group>	 -->
-
+                </transition-group>	
 			</div>
 		</div>
 	</div>
@@ -90,7 +78,7 @@
 
 		setup() {
 
-			let selectGender = ref('male');
+			let selectGender = ref('rand');
 
 			let hasError = ref(false);
 
@@ -151,6 +139,64 @@
 </script>
 
 <style>
+
+	.fade-enter {
+		opacity:0;
+	}
+
+	.fade-enter-active{
+		animation: fadein 0.5s;
+	}
+
+	.fade-leave {
+		opacity:1;
+	}
+
+	.fade-leave-active {
+		animation: fadein 0.3s reverse;
+	}
+
+	.list-enter-active,
+	.list-leave-active,
+	.list-move {
+		transition: 0.2s cubic-bezier(0.10, 0.12, 0.34, 0.55);
+		transition-property: opacity, transform;
+	}
+
+	.list-enter {
+		opacity: 0;
+		transform: translateX(50px) scaleY(0.5);
+	}
+
+	.list-enter-to {
+		opacity: 1;
+		transform: translateX(0) scaleY(1);
+	}
+
+	.list-leave-active {
+		position: absolute;
+	}
+
+	.list-leave-to {
+		opacity: 0;
+		transform: scaleY(0);
+		transform-origin: center top;
+	}    
+
+    /* Enter and leave animations can use different */
+    /* durations and timing functions.              */
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+
 	h1, h2, h3, h4, h5, h6 {
 		/*font-family: 'Julius Sans One', sans-serif;	*/
 		font-family: 'Black Ops One', cursive;
@@ -212,28 +258,6 @@
 		}
 	}
 
-
-	.fade-enter {
-		opacity:0;
-	}
-
-	.fade-enter-active{
-		animation: fadein 0.5s;
-	}
-
-	.fade-leave {
-		opacity:1;
-	}
-
-	.fade-leave-active {
-		animation: fadein 0.5s reverse;
-	}
-
-	@keyframes fadein {
-		from {opacity: 0;}
-		to   {opacity: 1;}
-	}
-
 	.gen {
 		font-weight: bold;
 		color: #7957d5;
@@ -284,33 +308,6 @@
 
 	.loader-wrapper img {
 		border-radius: 50%;
-	}
-
-	.list-enter-active,
-	.list-leave-active,
-	.list-move {
-		transition: 500ms cubic-bezier(0.59, 0.12, 0.34, 0.95);
-		transition-property: opacity, transform;
-	}
-
-	.list-enter {
-		opacity: 0;
-		transform: translateX(50px) scaleY(0.5);
-	}
-
-	.list-enter-to {
-		opacity: 1;
-		transform: translateX(0) scaleY(1);
-	}
-
-	.list-leave-active {
-		position: absolute;
-	}
-
-	.list-leave-to {
-		opacity: 0;
-		transform: scaleY(0);
-		transform-origin: center top;
 	}
 
 	@media screen and (max-width: 980px) {

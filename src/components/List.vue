@@ -1,45 +1,45 @@
 <template>
-	<div 
-		v-show="!isLoading" 
-		:class="{ 'is-active animate__fadeOutRight': isActive }" 
-		class="card animate__animated"  
-		:title="index+1" 
-		:id="firstname+lastname+index"
-	>
+    <div 
+        v-show="!isLoading" 
+        :class="{ 'is-active animate__fadeOutRight': isActive }" 
+        class="card animate__animated"  
+        :title="index+1" 
+        :id="person.name.first+person.name.last+index"
+    >
 
-		<div class="card-content"  @click.prevent="copyclipboard(`${index}-person-${firstname}`, index), removeList(firstname+lastname+index)">
+        <div class="card-content"  @click.prevent="copyclipboard(`${index}-person-${person.name.first}`, index), removeList(person.name.first+person.name.last+index)">
 
-			<div class="media">
-				<div class="media-left">
-					<figure class="image is-48x48">
-						<img :src="thumbnail" alt="Placeholder image">
-					</figure>
-				</div>
-				<div class="media-content">
-					<p class="subtitle is-5 person-name">{{ firstname }} {{ lastname }}
-						<span v-show="gender == 'male'" class="icon has-text-info">
-							<i class="fas fa-mars"></i>
-						</span>
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-48x48">
+                        <img :src="person.picture.thumbnail" alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="subtitle is-5 person-name">{{ person.name.first }} {{ person.name.last }}
+                        <span v-show="person.gender == 'male'" class="icon has-text-info">
+                            <i class="fas fa-mars"></i>
+                        </span>
 
-						<span v-show="gender == 'female'" class="icon has-text-danger">
-							<i class="fas fa-venus"></i>
-						</span>
-					</p>
-					
-					<p class="subtitle is-5 person-username">
-						{{ street }} {{ streetnumber }} <br />
-						{{ city }}, {{ state }} <br />
-						{{ country }}
-					</p>
-					
-					<p :id="`${index}-person-${firstname}`" class="subtitle is-5 person-email">{{ generateEmail(firstname+lastname) }}</p>
-					
-				</div>
-			</div>
+                        <span v-show="person.gender == 'female'" class="icon has-text-danger">
+                            <i class="fas fa-venus"></i>
+                        </span>
+                    </p>
+                    
+                    <p class="subtitle is-5 person-username">
+                        {{ person.location.street.name }} {{ person.location.street.number }} <br />
+                        {{ person.location.city }}, {{ person.location.state }} <br />
+                        {{ person.location.country }}
+                    </p>
+                    
+                    <p :id="`${index}-person-${person.name.first}`" class="subtitle is-5 person-email">{{ generateEmail(person.name.first+person.name.last) }}</p>
+                    
+                </div>
+            </div>
 
-		</div>
-		
-	</div>
+        </div>
+        
+    </div>
 </template>
 
 <script>
@@ -56,51 +56,54 @@
 
 			index: {
 				type: Number,
-			},
+            },
+            
+            person: {
+                type: Object,
+            }
 
-			firstname: {
-				type: String,
-			},
+			// firstname: {
+			// 	type: String,
+			// },
 
-			lastname: {
-				type: String,
-			},
+			// lastname: {
+			// 	type: String,
+			// },
 
-			gender: {
-				type: String,
-			},
+			// gender: {
+			// 	type: String,
+			// },
 
-			street: {
-				type: String,
-			},
+			// street: {
+			// 	type: String,
+			// },
 
-			streetnumber: {
-				type: Number,
-			},
+			// streetnumber: {
+			// 	type: Number,
+			// },
 
-			state: {
-				type: String,
-			},
+			// state: {
+			// 	type: String,
+			// },
 
-			city: {
-				type: String,
-			},
+			// city: {
+			// 	type: String,
+			// },
 
-			country: {
-				type: String,
-			},
+			// country: {
+			// 	type: String,
+			// },
 
-			thumbnail: {
-				type: String,
-			},
+			// thumbnail: {
+			// 	type: String,
+			// },
 
-			input: {
-				type: String,
-			}
+			// input: {
+			// 	type: String,
+			// }
 		},
 
 		setup(props, { emit }) {
-
 
 			let isActive = ref(false);
 
@@ -130,6 +133,11 @@
 
 <style>
 
+	@keyframes fadein {
+		from {opacity: 0;}
+		to   {opacity: 1;}
+	}
+
 	.is-active {
 		background: green !important;
 	}
@@ -137,10 +145,16 @@
 	.card {
 		margin-bottom: 13px;
 		position: relative;
-		-webkit-transition: all ease-in-out 03s;
-		-moz-transition: all ease-in-out 03s;
-		transition: all ease-in-out 03s;
+		-webkit-transition: all ease-in-out 0.3s;
+		-moz-transition: all ease-in-out 0.3s;
+		transition: all ease-in-out 0.3s;
 	}
+
+    .card p {
+		-webkit-transition: all ease-in-out 0.3s;
+		-moz-transition: all ease-in-out 0.3s;
+		transition: all ease-in-out 0.3s;
+    }
 
 	.media {
 		display: flex !important;
@@ -187,5 +201,10 @@
 	.card:hover {
 		cursor: pointer;
 		background: #7957d5 !important;
-	}		
+	}	
+
+    .card:hover p {
+        color: #fff;
+    }
+
 </style>
